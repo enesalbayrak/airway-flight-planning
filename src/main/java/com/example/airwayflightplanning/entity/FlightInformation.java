@@ -3,6 +3,8 @@ package com.example.airwayflightplanning.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,8 +24,12 @@ public class FlightInformation {
     @Column(nullable = false)
     private long airlineCode;
     @Column(nullable = false)
+    @Min(101)
+    @Max(181)
     private long sourceAirportCode;
     @Column(nullable = false)
+    @Min(101)
+    @Max(181)
     private long destinationAirportCode;
     @Column(nullable = false)
     private Date date;
