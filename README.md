@@ -14,3 +14,6 @@ I used libraries:
 Lombok:I used it to increase code readability and write speed
 ModelMapper: I used it for conversion of entities to data transfer objects.
 Openapi:I used it to check endpoints
+
+Swagger UI:http://localhost:7070/airway/api/v1/swagger-ui/index.html
+H2-Console:http://localhost:7070/airway/h2-console
