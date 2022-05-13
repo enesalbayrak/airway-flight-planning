@@ -1,6 +1,7 @@
 package com.example.airwayflightplanning.service;
 
 import com.example.airwayflightplanning.dto.request.AddFlightInfoRequest;
+import com.example.airwayflightplanning.dto.request.UpdateFlightInfoRequest;
 import com.example.airwayflightplanning.dto.response.FlightInfoResponse;
 
 import java.util.Date;
@@ -17,5 +18,7 @@ public interface FlightInfoService {
 
     List<FlightInfoResponse> getByDate(Date date);
 
-    FlightInfoResponse updateFlight(long pnr);
+    FlightInfoResponse updateFlight(UpdateFlightInfoRequest updateFlightInfoRequest);
+
+    void deleteFlight(long pnr);
 }

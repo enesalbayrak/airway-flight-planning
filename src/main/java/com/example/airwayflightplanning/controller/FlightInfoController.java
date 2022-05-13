@@ -1,6 +1,7 @@
 package com.example.airwayflightplanning.controller;
 
 import com.example.airwayflightplanning.dto.request.AddFlightInfoRequest;
+import com.example.airwayflightplanning.dto.request.UpdateFlightInfoRequest;
 import com.example.airwayflightplanning.dto.response.FlightInfoResponse;
 import com.example.airwayflightplanning.service.FlightInfoService;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,13 @@ public class FlightInfoController {
     }
 
     @PutMapping()
-    public FlightInfoResponse updateFlight (@RequestParam long pnr){
-        return flightInfoService.updateFlight(pnr);
+    public FlightInfoResponse updateFlight (@RequestBody UpdateFlightInfoRequest updateFlightInfoRequest){
+        return flightInfoService.updateFlight(updateFlightInfoRequest);
+    }
+
+    @DeleteMapping("{pnr}")
+    public void deleteFlight (@PathVariable long pnr){
+         flightInfoService.deleteFlight(pnr);
     }
 
 }
