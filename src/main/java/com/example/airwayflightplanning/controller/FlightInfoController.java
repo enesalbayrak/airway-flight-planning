@@ -41,7 +41,7 @@ public class FlightInfoController {
     }
 
     @PostMapping("/getByDate")
-    public List<FlightInfoResponse> getByDate (@RequestBody Date date){
+    public List<FlightInfoResponse> getByDate (@RequestBody LocalDate date){
         return flightInfoService.getByDate(date);
     }
 
@@ -54,9 +54,10 @@ public class FlightInfoController {
     public void deleteFlight (@PathVariable long pnr){
          flightInfoService.deleteFlight(pnr);
     }
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handle(IllegalArgumentException illegalArgumentException){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(illegalArgumentException.getMessage());
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handle(Exception exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
 }

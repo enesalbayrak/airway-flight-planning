@@ -6,12 +6,11 @@ import com.example.airwayflightplanning.dto.response.FlightInfoResponse;
 import com.example.airwayflightplanning.entity.FlightInformation;
 import com.example.airwayflightplanning.repository.FlightInfoRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -72,9 +71,10 @@ public class FlightInfoServiceImpl implements FlightInfoService{
     }
 
     @Override
-    public List<FlightInfoResponse> getByDate(Date date) {
-        return flightInfoRepository.getAllByDate(date)
-                .stream().map(flightInformation -> modelMapper.map(flightInformation,FlightInfoResponse.class)).toList();
+    public List<FlightInfoResponse> getByDate(LocalDate date) {
+        var stringOfDate = date.toString();
+        return flightInfoRepository.findAllByDateLike(stringOfDate).stream().map(flightInformation -> modelMapper.map(flightInformation,FlightInfoResponse.class)).toList();
+
     }
 
     @Override

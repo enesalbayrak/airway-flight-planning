@@ -17,7 +17,7 @@ public interface FlightInfoService {
 
     List<FlightInfoResponse> getByDestinationCode(long destinationAirportCode);
 
-    List<FlightInfoResponse> getByDate(Date date);
+    List<FlightInfoResponse> getByDate(LocalDate date);
 
     FlightInfoResponse updateFlight(UpdateFlightInfoRequest updateFlightInfoRequest);
 
