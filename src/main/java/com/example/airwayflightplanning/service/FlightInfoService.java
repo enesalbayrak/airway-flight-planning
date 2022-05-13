@@ -4,6 +4,7 @@ import com.example.airwayflightplanning.dto.request.AddFlightInfoRequest;
 import com.example.airwayflightplanning.dto.request.UpdateFlightInfoRequest;
 import com.example.airwayflightplanning.dto.response.FlightInfoResponse;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

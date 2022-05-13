@@ -5,8 +5,11 @@ import com.example.airwayflightplanning.dto.request.UpdateFlightInfoRequest;
 import com.example.airwayflightplanning.dto.response.FlightInfoResponse;
 import com.example.airwayflightplanning.service.FlightInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +40,8 @@ public class FlightInfoController {
         return flightInfoService.getByDestinationCode(destinationAirportCode);
     }
 
-    @GetMapping("/getByDate")
-    public List<FlightInfoResponse> getByDate (@RequestParam Date date){
+    @PostMapping("/getByDate")
+    public List<FlightInfoResponse> getByDate (@RequestBody Date date){
         return flightInfoService.getByDate(date);
     }
 
@@ -50,6 +53,10 @@ public class FlightInfoController {
     @DeleteMapping("{pnr}")
     public void deleteFlight (@PathVariable long pnr){
          flightInfoService.deleteFlight(pnr);
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handle(IllegalArgumentException illegalArgumentException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(illegalArgumentException.getMessage());
     }
 
 }

@@ -16,4 +16,5 @@ public interface FlightInfoRepository extends JpaRepository<FlightInformation,Lo
     List<FlightInformation>getAllByDate(Date date);
     FlightInformation findByPnr(long pnr);
     void deleteAllByPnr(long pnr);
+    List<FlightInformation> findAllByDateGreaterThanAndDateLessThan(Date startDate,Date endDate);
 }

@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 @Data
 @AllArgsConstructor
@@ -14,5 +15,5 @@ public class AddFlightInfoRequest {
     private long airlineCode;
     private long sourceAirportCode;
     private long destinationAirportCode;
-    private Date date;
+    private  Date date;
 }

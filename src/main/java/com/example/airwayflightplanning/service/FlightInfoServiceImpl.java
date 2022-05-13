@@ -7,10 +7,12 @@ import com.example.airwayflightplanning.entity.FlightInformation;
 import com.example.airwayflightplanning.repository.FlightInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +25,31 @@ public class FlightInfoServiceImpl implements FlightInfoService{
 
     @Override
     public FlightInfoResponse save(AddFlightInfoRequest addFlightInfoRequest) {
+        if(addFlightInfoRequest.getSourceAirportCode()==addFlightInfoRequest.getDestinationAirportCode()){
+            throw new IllegalArgumentException("It is not possible to have a flight to same airport");
+        }
         var flightInformation = modelMapper.map(addFlightInfoRequest, FlightInformation.class);
-        return modelMapper.map(flightInfoRepository.save(flightInformation),FlightInfoResponse.class);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(flightInformation.getDate());
+        calendar.add(Calendar.DATE,-1);
+        calendar.set(Calendar.HOUR,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,999);
+        Date dateBeforeDay= new Date();
+        dateBeforeDay=calendar.getTime();
+        //System.err.println(dateBeforeDay);
+        calendar.add(Calendar.DATE,1);
+        Date dateAfterDay = new Date();
+        dateAfterDay = calendar.getTime();
+        //System.err.println(dateAfterDay);
+        var list = flightInfoRepository.findAllByDateGreaterThanAndDateLessThan(dateBeforeDay,dateAfterDay);
+        //System.err.println(list);
+        if(list.size()>2){
+            throw new IllegalArgumentException("There are already three flights");
+        }
+        var savedFlight = flightInfoRepository.save(flightInformation);
+        return modelMapper.map(savedFlight,FlightInfoResponse.class);
     }
 
     @Override
